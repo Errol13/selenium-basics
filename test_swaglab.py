@@ -2,10 +2,8 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-import time
-
-
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def test_swaglab_login():
     #declare the browser to be used or driver
@@ -34,7 +32,9 @@ def test_swaglab_login():
         submit_button.click()
 
         # Wait a bit to let page load
-        time.sleep(2)
+        WebDriverWait(driver, 10).until(
+            EC.url_contains("inventory.html")
+        )
 
         #Assert that it successfully logged in with inventory in its url
         assert "inventory.html" in driver.current_url
