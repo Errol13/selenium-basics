@@ -75,6 +75,7 @@ def test_swaglab_invalid_credentials(username, password):
             EC.visibility_of_element_located((By.CLASS_NAME, "error-message-container"))
         )
         #assert if it contains error message 
+        print(error.text)
         assert error.is_displayed()
     
     finally:
@@ -82,3 +83,19 @@ def test_swaglab_invalid_credentials(username, password):
             driver.quit()
         except:
             print("Browser was already closed! skipping quit")
+
+
+#Adding to cart test 
+def test_add_to_cart():
+    #perform the login first
+    driver = webdriver.Chrome()
+    perform_login(driver,"standard_user", "secret_sauce")
+
+    #check if it is in the homepage or logged in
+    WebDriverWait(driver,10).until(
+        EC.url_contains("inventory")
+    )
+
+    #Add the backpack to cart
+    backpack_add_button = driver.find_element(By.ID, "add-to-cart-sauce-labs-backpack")
+    backpack_add_button.click()
